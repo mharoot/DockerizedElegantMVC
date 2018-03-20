@@ -1,0 +1,54 @@
+version: '2'
+
+services:
+    web:
+        image: nginx:latest
+        ports:
+            - "80:80"
+        volumes:
+            - ./code:/code
+            - ./site.conf:/etc/nginx/conf.d/default.conf
+        networks:
+            - code-network
+        working_dir: /code
+        links:
+            - redis:devcahce1
+    php:
+        build: ./php
+        volumes:
+            - ./code:/code
+        working_dir: /code
+        networks:
+            - code-network
+        links:
+            - redis:devcahce1
+            - db
+            # :mysql
+        # depends_on:
+        #     - db
+
+
+    redis:
+        build: ./.docker/cache
+        container_name: devcache1
+        networks:
+            - code-network
+
+    db:
+      image: mysql:latest
+      restart: always
+      container_name: mysql
+      environment:
+        MYSQL_ROOT_PASSWORD: password
+      volumes:
+        - dbdata:/var/lib/mysql
+      networks:
+        - code-network
+        
+
+networks:
+    code-network:
+        driver: bridge
+
+volumes:
+    dbdata:
