@@ -87,7 +87,6 @@ class Database {
 
 	public function describe($tableName)
 	{
-		echo $tableName;
 		$this->query("DESCRIBE ".$tableName);
 		$this->execute();
         return $this->stmt->fetchAll(PDO::FETCH_COLUMN);
