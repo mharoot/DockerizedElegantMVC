@@ -35,18 +35,21 @@ services:
             - code-network
 
     db:
-    #   image: mysql:latest
+    #   image: mysql:5.7.22
+    
       build: ./mysql
       restart: always
       container_name: mysql
       environment:
         MYSQL_ROOT_PASSWORD: password
+        MYSQL_USER: root
+        MYSQL_DATABASE: emvc
       volumes:
         - dbdata:/var/lib/mysql
-      working_dir: /code/mysql
       networks:
         - code-network
         
+
 
 networks:
     code-network:

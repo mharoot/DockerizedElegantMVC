@@ -1,8 +1,5 @@
-FROM mysql:latest
+FROM mysql:5.7.22
 
-RUN mysql -uroot -ppassword \
-    && CREATE DATABASE emvc \
-    && USE emvc\
-    && emvc < emvc.sql
+ADD emvc.sql /docker-entrypoint-initdb.d/
 
 EXPOSE 80
