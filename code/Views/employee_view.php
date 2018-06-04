@@ -1,48 +1,37 @@
 <?php
 
-    /**
-    * The Employees page view
-    */
-    class EmployeeView
-    {
+/**
+* The Employees page view
+*/
+class EmployeeView
+{
 
-        private $modelObj;
+  public function customerOrders($orders)
+  {
+    require_once 'pages/templates/header.php';
+    require_once 'pages/employee/customer-orders.php';
+    require_once 'pages/templates/footer.php';
+  }
 
-        private $controller;
+  public function displayEmployeeInformation($employee_info)
+  {
+    require_once 'pages/templates/header.php';
+    require_once 'pages/employee/review-employee-information.php';
+    require_once 'pages/templates/footer.php';
+  }
 
+  public function reviewEmployeeInformation($employee_info)
+  {
+    require_once 'pages/templates/header.php';
+    require_once 'pages/employee/review-employee-information.php';
+    require_once 'pages/templates/footer.php'; 
+  }
 
-        function __construct($controller, $model)
-        {
-            $this->controller = $controller;
-
-            $this->modelObj = $model;
-
-            print "Employees - ";
-        }
-
-
-
-         public function get()
-        {
-            print "All";
-            $employees = $this->controller->getEmployee();
-            echo '<ul>';
-            foreach(  $employees as $employee)
-            {
-                echo "<li>
-                        <ul>
-                            <li>EmployeeID: $employee->EmployeeID</li>
-                            <li>LastName: $employee->LastName </li>
-                            <li>FirstName: $employee->FirstName</li>
-                            <li>BirthDate: $employee->BirthDate</li>
-                            <li>Photo: $employee->Photo</li>
-                            <li>Notes: $employee->Notes</li>
-                        </ul>
-                      </li>";
-            }
-            echo '</ul>';
-        }
-        /**
-         * Action Methods
-         */
-    }
+  public function shipOrderForm($shippers, $OrderID)
+  {
+    require_once 'pages/templates/header.php';
+    require_once 'pages/employee/ship-order-form.php';
+    require_once 'pages/templates/footer.php';
+  }
+    
+}

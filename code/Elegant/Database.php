@@ -52,7 +52,7 @@ class Database {
 		}
 		
 		$this->stmt->bindValue($param, $value, $type);
-
+		// var_dump($this->stmt);
 	}
 
     /* if your using CUD operationgs: only creating, updating, or deleting you just call execute */
@@ -77,15 +77,17 @@ class Database {
 
 	public function resultsetObject($className, $constructorArguments = NULL)
 	{
+		
 		$this->execute();
-		$this->stmt->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, $className, $constructorArguments);
+		// $this->stmt->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, $className, $constructorArguments);
+		$this->stmt->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'Data', $constructorArguments);
 		return $this->stmt->fetchAll();
 
 	}
 
 	public function describe($tableName)
 	{
-		
+		echo $tableName;
 		$this->query("DESCRIBE ".$tableName);
 		$this->execute();
         return $this->stmt->fetchAll(PDO::FETCH_COLUMN);
@@ -116,4 +118,6 @@ class Database {
 	}
 
 }
+
+class Data {};
 ?>

@@ -2,6 +2,7 @@
 declare(strict_types=1);
 session_start();
 
+
 //REQUIRED FILES
 require_once __DIR__.'/Elegant/Model.php';
 $files = glob(__DIR__.'/Models/*.php');
@@ -18,36 +19,25 @@ foreach ($files as $file) {
 }
 require_once (__DIR__.'/Router.php');
 
-
 $url = isset($_SERVER['PATH_INFO']) ? explode('/', ltrim($_SERVER['PATH_INFO'],'/')) : '/';
+
 $_SESSION["page"] = $url[0];
 
 if(!isset($_SESSION["user_type"]))
 {
 	$_SESSION["authorization"] = 0;
+	$_SESSION["user_type"] = 0;
 }
 else
 {
 	$_SESSION["authorization"] = $_SESSION["user_type"];
 }
 
-unset($_SESSION["content"]);
-$_SESSION["content"] = "";
+
+
 
 
 $router = new Router();
-                //name       //controller //method //authorization ids
-$router->addRoute("/","IndexController","index");
-$router->addRoute("index","IndexController","index");
-
-
-/**
- *              Product Routes
- */
-$router->addRoute("products","ProductController","displayProducts");
-$router->addRoute("products","CategoryController","displayCategory");
-$router->addRoute("productsPost","ProductController","paste");
-$router->addRoute("food","ProductController","food");
 
 /**
  *              About Routes
@@ -57,6 +47,59 @@ $router->addRoute("about","AboutController","about");
 $router->addRoute("about-query-builder", "AboutController", "aboutQueryBuilder");
 $router->addRoute("db-uml", "AboutController", "dbUML");
 
+
+/**
+ *              Cart Routes
+ */
+$router->addRoute("addCart","CartController","addCart");
+$router->addRoute("cart","CartController","displayCart");
+$router->addRoute("updateCart", "CartController", "updateCart");
+$router->addRoute("checkout", "CartController", "displayCheckout");
+$router->addRoute("confirmcheckout", "CartController", "confirmCheckout");
+$router->addRoute("wishlist","CartController","displayWishlist");
+$router->addRoute("addWish","CartController","addWish");
+$router->addRoute("removeWish","CartController","removeWish");
+
+
+/**
+ *              Customer Routes
+ */
+$router->addRoute("review-billing-information", "CustomerController", "displayReviewBillingInformation",array(2));
+$router->addRoute("edit-billing-information", "CustomerController", "editBillingInformation",array(2));
+
+
+/**
+ *            Employee Routes
+ */
+
+$router->addRoute("customer-orders","EmployeeController","displayCustomerOrders", array(3)); 
+$router->addRoute("edit-employee-information","EmployeeController","editEmployeeInformation", array(3));  
+$router->addRoute("review-employee-information","EmployeeController","displayEmployeeInformation", array(3));    
+$router->addRoute("ship-order","EmployeeController","shipOrder", array(3));    
+$router->addRoute("ship-order-form","EmployeeController","displayShipOrderForm", array(3)); 
+
+
+
+
+
+/**
+ *              Home Routes
+ */
+$router->addRoute("/","UserController","displayDashboard");
+$router->addRoute("index","UserController","displayDashboard");
+$router->addRoute("home","UserController","displayDashboard");
+
+
+
+/**
+ *              Product Routes
+ */
+$router->addRoute("products","ProductController","displayProducts");
+//$router->addRoute("products","CategoryController","displayCategory");
+$router->addRoute("search","ProductController","searchProducts");
+$router->addRoute("productsPost","ProductController","paste");
+$router->addRoute("food","ProductController","food");
+$router->addRoute("select","ProductController","selectProduct");
 
 
 /**
@@ -88,14 +131,6 @@ $router->addRoute("registered","UserController","registerUser");
 $router->addRoute("user-email-verification", "UserController", "userEmailActivation");
 $router->addRoute("user-password-reset", "UserController", "displayEditPasswordForm");
 
-/**
- *              Customer Routes
- */
-
-$router->addRoute("review-billing-information", "CustomerController", "reviewBillingInformation",array(2));
-$router->addRoute("edit-billing-information", "CustomerController", "editBillingInformation",array(2));
-$router->addRoute("insert-new-billing-information", "CustomerController", "insertNewBillingInformation",array(2));
-
 
 /**
  *              Supplier Routes
@@ -103,6 +138,14 @@ $router->addRoute("insert-new-billing-information", "CustomerController", "inser
 $router->addRoute("suppliers", "SupplierController", "displayAllSuppliers", array(1));
 $router->addRoute("review-business-information", "SupplierController", "displayReviewBusinessInformation", array(4));
 $router->addRoute("edit-business-information", "SupplierController", "editBusinessInformation", array(4));
+$router->addRoute("view-all-supplier-products", "SupplierController", "displaySupplierProducts", array(4));
+$router->addRoute("update-product-form", "SupplierController", "displayProductForm", array(4));
+$router->addRoute("edit-product-information", "SupplierController", "editProductInformation", array(4));
+$router->addRoute("delete-product", "SupplierController", "deleteProduct", array(4));
+
+
+
+
 
 
 
@@ -119,5 +162,6 @@ else
 {
     $router->routePage($url[0],array());
 }
+
 
 ?>

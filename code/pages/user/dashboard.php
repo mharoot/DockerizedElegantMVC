@@ -18,9 +18,56 @@
                 <p> <b>Username:</b> <?php echo $_SESSION["user_name"]; ?> <a href="./edit-user-name-form">Edit</a></p>
                 <p> <b>Email:</b>    <?php echo $_SESSION["user_email"]; ?> <a href="./edit-user-email-form">Edit</a></p>
                 <p><a href="./edit-user-password-form">Change Password</a></p>
+
+
+<?php 
+                echo $_SESSION['DashboardContent'];
+?>
+
+                
                 <a href="./logout" class="pull-right need-help">Logout? </a>
             </br>
         </div>
+
+    </div>
+     <?php
+        if($_SESSION['user_type'] == 2)
+        {
+    ?>
+    <div class="col">
+        <h2> Orders </h2>
+        <table class="table" style="background-color: white;color: #316884;">
+        <thead>
+        <tr>
+            <th style="background-color: white;color: #316884;" scope="col">Order ID</th>
+            <th style="background-color: white;color: #316884;" scope="col">Product Name </th>
+            <th style="background-color: white;color: #316884;" scope="col">Supplier Name </th>
+            <th style="background-color: white;color: #316884;" scope="col">Quantity </th>
+            <th style="background-color: white;color: #316884;"scope="col"> Date </th>
+            <th style="background-color: white;color: #316884;" scope="col"> Status </th>
+        </tr>
+        </thead>
+        <tbody>
+   <?php
+            foreach ($orders as $o) {
+
+                $status = '<td style="color: red;">Not Shipped</td>';
+                if($o->OrderStatus > 0)
+                {
+                    $status = '<td style="color: green;"> Shipped </td>';
+                }
+              echo '<tr>
+                    <td>'.$o->OrderID.'</td>
+                    <td>'.$o->ProductName.'</td>
+                    <td>'.$o->SupplierName.'</td>
+                    <td>'.$o->Quantity.'</td>
+                    <td>'.$o->OrderDate.'</td>'.$status.
+                    '</tr>';
+            }
+        }
+    ?>
+    </tbody>
+    </table>
     </div>
 </div>
 <div>
