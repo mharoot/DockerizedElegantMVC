@@ -1,6 +1,6 @@
-docker container stop $(docker container ls -q)
+docker container stop $(docker ps)
 docker container rm $(docker container ls -q)
-docker container prune -y
+docker container prune -f
 docker rmi -f $(docker images -q)
-docker volume rm $(docker volume ls -q)
-docker-compose up
+docker volume rm -f $(docker volume ls -q)
+docker-compose up --scale php=4
