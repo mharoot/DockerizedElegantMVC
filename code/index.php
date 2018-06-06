@@ -1,6 +1,10 @@
 <?php
 declare(strict_types=1);
+ini_set('session.save_handler', 'redis');
+ini_set('session.save_path', 'tcp://devcache1:6379, tcp://devcache1:6379');
+session_name('ElegantMVC');
 session_start();
+
 
 
 //REQUIRED FILES

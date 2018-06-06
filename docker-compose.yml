@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 services:
     web:
@@ -30,6 +30,14 @@ services:
 
     redis:
         build: ./.docker/cache
+        # deploy:
+        #   resources:
+        #     limits:
+        #       cpus: '0.50'
+        #       memory: 500M
+        #     reservations:
+        #        cpus: '0.25'
+        #        memory: 200M
         container_name: devcache1
         networks:
             - code-network
