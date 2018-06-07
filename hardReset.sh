@@ -1,4 +1,4 @@
-docker container stop $(docker ps)
+docker container stop $(docker ps -q)
 docker container rm $(docker container ls -q)
 docker container prune -f
 docker rmi -f $(docker images -q)
