@@ -23,7 +23,7 @@ foreach ($files as $file) {
 }
 require_once (__DIR__.'/Router.php');
 
-$url = isset($_SERVER['PATH_INFO']) ? explode('/', ltrim($_SERVER['PATH_INFO'],'/')) : '/';
+$url = strlen($_SERVER['PATH_INFO']) > 1 ? explode('/', ltrim($_SERVER['PATH_INFO'],'/')) : '/';
 
 $_SESSION["page"] = $url[0];
 
