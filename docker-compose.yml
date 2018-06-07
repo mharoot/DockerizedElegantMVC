@@ -38,6 +38,14 @@ services:
         #     reservations:
         #        cpus: '0.25'
         #        memory: 200M
+        #         michael@galliumos:~/Desktop/DockerizedElegantMVC$ free -m
+        #               total        used        free      shared  buff/cache   available
+        # Mem:           3900        1052         314         175        2533        2517
+        # Swap:          5851           1        5849
+        #
+        #
+        # doesn't seem to do much
+
         container_name: devcache1
         networks:
             - code-network
