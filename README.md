@@ -28,3 +28,9 @@ LEMP STACK, Using php-fpm, with nginx as a frontend load balancer, with redis fo
 ### Dividing the CPU
 - `grep -c ^processor /proc/cpuinfo`
     - my output was 2, yours may be different.
+
+
+### Goin Live on NGROK
+NGROK always changes the web domain name in the free version.  Thus, we must modify the following file:
+- code/config/PHPMailer.php
+- Configure gmail to send email and use your username and pass.  Careful not to post to github.
