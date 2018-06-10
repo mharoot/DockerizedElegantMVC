@@ -16,6 +16,9 @@ if (!extension_loaded('gd')) {
     die("It looks like GD is not installed");
 }
 
+ini_set('session.save_handler', 'redis');
+ini_set('session.save_path', 'tcp://redisfrontend:6379, tcp://redisfrontend:6379');
+session_name('ElegantMVC');
 session_start();
 
 // target captcha string length

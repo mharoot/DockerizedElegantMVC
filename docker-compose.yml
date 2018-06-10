@@ -1,51 +1,40 @@
 version: '3'
 
 services:
-    web:
+    nginx: # todo get the nginx current version and modify the line with image: -->  build: ./services/nginx
         image: nginx:latest
+        container_name: nginx
         ports:
             - "80:80"
         volumes:
             - ./code:/code
-            - ./site.conf:/etc/nginx/conf.d/default.conf
+            - ./services/nginx/conf/site.conf:/etc/nginx/conf.d/default.conf
         networks:
             - code-network
         working_dir: /code
         links:
-            - redis:devcahce1
+            - redis:redisfrontend
+
     php:
-        build: ./php
+        build: ./services/php
+        # container_name: phpworker sincewe are scaling no need for this?
         volumes:
             - ./code:/code
         working_dir: /code
         networks:
             - code-network
         links:
-            - redis:devcahce1
-            - db
-            # :mysql
-        # depends_on:
-        #     - db
-
+            - redis:redisfrontend
+            - mysql
 
     redis:
-        build: ./.docker/cache
-        # deploy:
-        #   resources:
-        #     limits:
-        #       cpus: '0.50'
-        #       memory: 500M
-        #     reservations:
-        #        cpus: '0.25'
-        #        memory: 200M
-        container_name: devcache1
+        build: ./services/redis
+        container_name: redisfrontend
         networks:
             - code-network
 
-    db:
-    #   image: mysql:5.7.22
-    
-      build: ./mysql
+    mysql:
+      build: ./services/mysql
       restart: always
       container_name: mysql
       environment:
@@ -53,15 +42,13 @@ services:
         MYSQL_USER: root
         MYSQL_DATABASE: emvc
       volumes:
-        - dbdata:/var/lib/mysql
+        - mysqldata:/var/lib/mysql
       networks:
-        - code-network
-        
-
+        - code-network   
 
 networks:
     code-network:
         driver: bridge
 
 volumes:
-    dbdata:
+    mysqldata:

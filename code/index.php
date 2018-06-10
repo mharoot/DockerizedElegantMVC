@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 ini_set('session.save_handler', 'redis');
-ini_set('session.save_path', 'tcp://devcache1:6379, tcp://devcache1:6379');
+ini_set('session.save_path', 'tcp://redisfrontend:6379, tcp://redisfrontend:6379');
 session_name('ElegantMVC');
 session_start();
 
@@ -23,7 +23,7 @@ foreach ($files as $file) {
 }
 require_once (__DIR__.'/Router.php');
 
-$url = isset($_SERVER['PATH_INFO']) ? explode('/', ltrim($_SERVER['PATH_INFO'],'/')) : '/';
+$url = strlen($_SERVER['PATH_INFO']) > 1 ? explode('/', ltrim($_SERVER['PATH_INFO'],'/')) : '/';
 
 $_SESSION["page"] = $url[0];
 
