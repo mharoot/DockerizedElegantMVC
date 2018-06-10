@@ -12,7 +12,7 @@ services:
             - code-network
         working_dir: /code
         links:
-            - redis:devcahce1
+            - redis:devcache1
     php:
         build: ./php
         volumes:
@@ -21,7 +21,7 @@ services:
         networks:
             - code-network
         links:
-            - redis:devcahce1
+            - redis:devcache1
             - db
             # :mysql
         # depends_on:
