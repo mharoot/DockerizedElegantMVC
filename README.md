@@ -3,19 +3,20 @@
 LEMP STACK, Using php-fpm, with nginx as a frontend load balancer, with redis for session management, and MySql
 
 ### Images used
-- mysql:5.7.22
-- php:7.1.0-fpm
+- *mysql:5.7.22*
+- *php:7.1.0-fpm*
+- **redis:3-alpine**
     - inside this image we run the following command:
     ```
-        RUN pecl install redis-3.0.0 \
+        RUN pecl install `redis-3.0.0` \
         && docker-php-ext-enable redis \
         && apt-get update \
         && apt-get install -y git zlib1g-dev \
         && docker-php-ext-install pdo pdo_mysql zip
     ```
-    - note: redis-3.0.0 is the only one that seems to work with this php image.
+    - note: redis-3.0.0 is the only one that seems to work with these set of images.
 
-- redis:3-alpine
+
 - NOTE:
   - you must add the following to your index.php file or anywhere you start your first session
   ```
