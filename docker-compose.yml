@@ -90,7 +90,7 @@ services:
       build: ./services/user/mysql
       restart: always
       container_name: userdb
-      envinronment:
+      environment:
         MYSQL_ROOT_PASSWORD: password
         MYSQL_USER: root
         MYSQL_DATABASE: emvc 
@@ -103,7 +103,7 @@ services:
       build: ./services/customer/mysql
       restart: always
       container_name: customerdb
-      envinronment: 
+      environment: 
         MYSQL_ROOT_PASSWORD: password
         MYSQL_USER: root
         MYSQL_DATABASE: emvc 
@@ -116,7 +116,7 @@ services:
       build: ./services/employee/mysql
       restart: always
       container_name: employeedb
-      envinronment: 
+      environment: 
         MYSQL_ROOT_PASSWORD: password
         MYSQL_USER: root
         MYSQL_DATABASE: emvc 
@@ -129,7 +129,7 @@ services:
       build: ./services/supplier/mysql
       restart: always
       container_name: supplierdb
-      envinronment: 
+      environment: 
         MYSQL_ROOT_PASSWORD: password
         MYSQL_USER: root
         MYSQL_DATABASE: emvc 
@@ -142,7 +142,7 @@ services:
       build: ./services/product/mysql
       restart: always
       container_name: productdb
-      envinronment: 
+      environment: 
         MYSQL_ROOT_PASSWORD: password
         MYSQL_USER: root
         MYSQL_DATABASE: emvc 
