@@ -1,5 +1,5 @@
 # LEMP STACK, Using php-fpm, with nginx as a frontend load balancer, with redis for session management, and MySql
-![alt text](https://raw.githubusercontent.com/mharoot/DockerizedElegantMVC/microservices/architecture.png)
+![alt text](https://user-images.githubusercontent.com/24758613/46195300-d0580300-c2b8-11e8-9a2c-9c4e31b90a4b.png)
 
 
 ### Images used
