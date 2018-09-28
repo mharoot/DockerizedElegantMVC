@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-    nginx: # todo get the nginx current version and modify the line with image: -->  build: ./services/nginx
+    nginx:
         image: nginx:latest
         container_name: nginx
         ports:
@@ -15,40 +15,158 @@ services:
         links:
             - redis:redisfrontend
 
-    php:
-        build: ./services/php
-        # container_name: phpworker sincewe are scaling no need for this?
+##### using the same php-fpm image for all API services ./services/php ########
+    user:
+        build: ./services/php 
         volumes:
-            - ./code:/code
-        working_dir: /code
+            - ./services/user:/services/user
+        working_dir: /services/user
         networks:
-            - code-network
+            - user-network
         links:
             - redis:redisfrontend
-            - mysql
+            - userdb
 
+    customer:
+        build: ./services/php 
+        volumes:
+            - ./services/customer:/services/customer
+        working_dir: /services/customer
+        networks:
+            - customer-network
+        links:
+            - redis:redisfrontend
+            - customerdb
+
+    employee:
+        build: ./services/php 
+        volumes:
+            - ./services/employee:/services/employee
+        working_dir: /services/employee
+        networks:
+            - employee-network
+        links:
+            - redis:redisfrontend
+            - employeedb
+    
+    supplier:
+        build: ./services/php
+        volumes:
+            - ./services/supplier:/services/supplier
+        working_dir: /services/supplier
+        networks:
+            - supplier-network
+        links:
+            - redis:redisfrontend
+            - supplierdb
+    
+    product:
+        build: ./services/php 
+        volumes:
+            - ./services/product:/services/product
+        working_dir: /services/product
+        networks:
+            - product-network
+        links:
+            - redis:redisfrontend
+            - productdb
+    
+    
+############## REDIS SERVICE ###################
     redis:
         build: ./services/redis
         container_name: redisfrontend
         networks:
-            - code-network
+            - user-network
+            - customer-network
+            - employee-network
+            - suppler-network
+            - product-network
+ 
 
-    mysql:
-      build: ./services/mysql
+
+############## DATABASE SERVICES ###################
+    userdb:
+      build: ./services/user/mysql
       restart: always
-      container_name: mysql
-      environment:
+      container_name: userdb
+      envinronment:
         MYSQL_ROOT_PASSWORD: password
         MYSQL_USER: root
-        MYSQL_DATABASE: emvc
-      volumes:
-        - mysqldata:/var/lib/mysql
+        MYSQL_DATABASE: emvc 
+      volumes: 
+        - userdata:/var/lib/mysql
       networks:
-        - code-network   
+        - user-network
+
+    customerdb:
+      build: ./services/customer/mysql
+      restart: always
+      container_name: customerdb
+      envinronment: 
+        MYSQL_ROOT_PASSWORD: password
+        MYSQL_USER: root
+        MYSQL_DATABASE: emvc 
+      volumes: 
+        - userdata:/var/lib/mysql
+      networks:
+        - user-network
+
+    employeedb:
+      build: ./services/employee/mysql
+      restart: always
+      container_name: employeedb
+      envinronment: 
+        MYSQL_ROOT_PASSWORD: password
+        MYSQL_USER: root
+        MYSQL_DATABASE: emvc 
+      volumes: 
+        - employeedata:/var/lib/mysql
+      networks:
+        - employee-network
+
+    supplierdb:
+      build: ./services/supplier/mysql
+      restart: always
+      container_name: supplierdb
+      envinronment: 
+        MYSQL_ROOT_PASSWORD: password
+        MYSQL_USER: root
+        MYSQL_DATABASE: emvc 
+      volumes: 
+        - userdata:/var/lib/mysql
+      networks:
+        - supplier-network
+
+    productdb:
+      build: ./services/product/mysql
+      restart: always
+      container_name: productdb
+      envinronment: 
+        MYSQL_ROOT_PASSWORD: password
+        MYSQL_USER: root
+        MYSQL_DATABASE: emvc 
+      volumes: 
+        - productdata:/var/lib/mysql
+      networks:
+        - product-network
+
 
 networks:
-    code-network:
+    user-network:
+        driver: bridge
+    customer-network:
+        driver: bridge
+    employee-network:
+        driver: bridge
+    supplier-network:
+        driver: bridge
+    product-network:
         driver: bridge
 
 volumes:
-    mysqldata:
+    userdata:
+    customerdata:
+    employeedata:
+    supplierdata:
+    productdata:

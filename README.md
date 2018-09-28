@@ -1,6 +1,6 @@
-# Docker ISHOW HOW TO USE MYSQL PHP NGINX REDIS
+# LEMP STACK, Using php-fpm, with nginx as a frontend load balancer, with redis for session management, and MySql
+![alt text](https://raw.githubusercontent.com/mharoot/DockerizedElegantMVC/microservices/architecture.png)
 
-LEMP STACK, Using php-fpm, with nginx as a frontend load balancer, with redis for session management, and MySql
 
 ### Images used
 - *mysql:5.7.22*
